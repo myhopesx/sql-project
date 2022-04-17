@@ -1,0 +1,105 @@
+CREATE DATABASE store;
+
+ CREATE TABLE countries (
+    code int primary key ,
+    Name varchar(20),
+    continet_name varchar(20)
+);
+
+ CREATE TABLE users (
+    id int primary key ,
+    full_name varchar(20),
+    email varchar(20),
+    gender char(1),
+    date_of_birth varchar(15),
+    create_at date,
+    country_code int
+);
+
+ALTER TABLE users
+ADD FOREIGN KEY (country_code) REFERENCES countries(code);
+
+ CREATE TABLE orders (
+    id int primary key ,
+    user_id int,
+    status varchar(6),
+    create_at DateTime
+);
+
+ALTER TABLE orders
+ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ CREATE TABLE order_product (
+    order_id int,
+    product_id int,
+    quantity int,
+     PRIMARY KEY (order_id, product_id)
+);
+
+
+ALTER TABLE order_product
+ADD FOREIGN KEY (order_id) REFERENCES orders(id);
+
+
+ CREATE TABLE products (
+ id int primary key,
+    name varchar(10),
+    price int,
+    status varchar(10),
+    create_at DateTime
+);
+
+ALTER TABLE order_product
+ADD FOREIGN KEY (product_id) REFERENCES products(id);
+
+ALTER TABLE countries
+ADD UNIQUE (name);
+
+ALTER TABLE countries
+   MODIFY continet_name varchar(20) NOT NULL;
+
+ALTER TABLE users
+ADD UNIQUE (email);
+
+
+ALTER TABLE users
+ADD CHECK (gender='f' or gender='m');
+
+ALTER TABLE orders
+ADD CHECK (status='start' or status='finish');
+
+alter table order_product
+MODIFY quantity int DEFAULT 0; 
+
+alter table products
+MODIFY price int DEFAULT 0; 
+
+ALTER TABLE products
+   MODIFY name varchar(10) NOT NULL;
+
+ALTER TABLE products
+ADD CHECK (status='valid' or status='expired');
+
+alter table products
+MODIFY create_at timestamp DEFAULT now(); 
+
+
+
+
+
+
+insert into countries values (123, 'saudi','asia');
+
+insert into users values (100, 'Amaal Alzhrani','Amaal@gmail.com','f','12-08-199',now(),123);
+
+insert into orders values (100, 100,'finish',now());
+
+insert into products values (100, 'brush',15,'valid','20220611 10:34:09 AM');
+
+insert into order_product values (100, 100,10);
+
+UPDATE countries
+SET name = 'saudi arabia'
+WHERE code = 123;
+
+DELETE FROM products WHERE id=100;
