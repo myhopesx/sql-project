@@ -12,7 +12,7 @@ CREATE DATABASE store;
     email varchar(20),
     gender char(1),
     date_of_birth varchar(15),
-    create_at date,
+    create_at DateTime,
     country_code int
 );
 
@@ -83,11 +83,6 @@ ADD CHECK (status='valid' or status='expired');
 alter table products
 MODIFY create_at timestamp DEFAULT now(); 
 
-
-
-
-
-
 insert into countries values (123, 'saudi','asia');
 
 insert into users values (100, 'Amaal Alzhrani','Amaal@gmail.com','f','12-08-199',now(),123);
@@ -103,3 +98,4 @@ SET name = 'saudi arabia'
 WHERE code = 123;
 
 DELETE FROM products WHERE id=100;
+
